@@ -25,14 +25,14 @@ func (e Enum) Equal(s string) bool {
 // NewEnumSet create a new EnumSet
 func NewEnumSet() *EnumSet {
 	ret := &EnumSet{}
-	ret.list = map[string]bool{}
+	ret.list = map[string]struct{}{}
 	allEnumSet = append(allEnumSet, ret)
 	return ret
 }
 
 // EnumSet represents a set of enum
 type EnumSet struct {
-	list map[string]bool
+	list map[string]struct{}
 }
 
 // Reg regist a new enum to the set
@@ -41,7 +41,7 @@ func (es *EnumSet) RegOrDie(val string) Enum {
 	if _, ok := es.list[e.Val()]; ok {
 		panic(fmt.Sprintf("dupicate enum value %s", val))
 	}
-	es.list[e.Val()] = true
+	es.list[e.Val()] = struct{}{}
 
 	return e
 }
